@@ -1,4 +1,4 @@
-MATLAB_ROOT := /home/tom/Data_HDD/MATLAB/R2023b
+MATLAB_ROOT :=~/.local/matlab2023b
 MEX := $(MATLAB_ROOT)/bin/mex
 
 TARGETS := mex_test.mexa64 mex_test_parallel.mexa64
@@ -16,8 +16,11 @@ all: $(TARGETS)
 $(TARGETS): %.mexa64: %.c
 	$(MEX) -v $< $(MEX_CFLAGS) $(INCLUDES) $(LIBS) -output $*
 
+
+.PHONY: clean
+
 clean:
-	rm $(TARGET)
+	$(RM) $(TARGETS)
 
 run_matlab:
 	LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/lib/x86_64-linux-gnu/libmpi.so.40:/usr/lib/x86_64-linux-gnu/libgfortran.so.5 $(MATLAB_ROOT)/bin/matlab
